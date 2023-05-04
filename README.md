@@ -1,2 +1,2 @@
-# Uppgift 6
+# Projekt 6
 Simulering av cirkel och triangel i kvadrat.
