@@ -1,2 +1,2 @@
-# sanstat-grupp-17
+# Uppgift 6
 Simulering av cirkel och triangel i kvadrat.
