@@ -19,7 +19,7 @@ def get_random_coordinates():
 
 
 def get_circle():
-    return plt.Circle(get_random_coordinates(), 0.5, edgecolor='black', facecolor='none')
+    return plt.Circle(get_random_coordinates(), 1, edgecolor='black', facecolor='none')
 
 
 def update(frame_number):
