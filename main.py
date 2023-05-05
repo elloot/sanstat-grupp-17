@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
+from coverage_controll import CoverageController
+
 np.random.seed(19680801)
 n = 100
 c = 0
@@ -13,17 +15,11 @@ ax.set_xlim(0, np.sqrt(n)), ax.set_xticks([]), ax.set_xlabel(r'$\sqrt{n}$')
 ax.set_ylim(0, np.sqrt(n)), ax.set_yticks([]), ax.set_ylabel(r'$\sqrt{n}$', rotation=0, labelpad=10)
 ax.set_aspect('equal', adjustable='box')
 
-
-def get_random_coordinates():
-    return np.random.uniform(0, np.sqrt(n)), np.random.uniform(0, np.sqrt(n))
-
-
-def get_circle():
-    return plt.Circle(get_random_coordinates(), 1, edgecolor='black', facecolor='none')
+coverage_controller = CoverageController(n)
 
 
 def update(frame_number):
-    ax.add_patch(get_circle())
+    ax.add_patch(coverage_controller.get_circles().__next__())
     ax.set_title('number of circles {}'.format(frame_number))
     return
 
