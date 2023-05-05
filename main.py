@@ -20,9 +20,12 @@ coverage_controller = CoverageController(n)
 
 def update(frame_number):
     ax.add_patch(coverage_controller.get_circles().__next__())
-    ax.set_title('number of circles {}'.format(frame_number))
+    if coverage_controller.are_walls_connected():
+        animation.pause()
+    else:
+        ax.set_title('number of circles {}'.format(frame_number))
     return
 
 
-animation = FuncAnimation(fig, update, interval=100, save_count=100)
+animation = FuncAnimation(fig, update, interval=1, save_count=100)
 plt.show()

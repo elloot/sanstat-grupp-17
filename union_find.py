@@ -28,3 +28,5 @@ class UnionFind:
         self.parent[x] = y
         if self.rank[x] == self.rank[y]:
             self.rank[y] += 1
+
+
