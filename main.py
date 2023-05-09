@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib import animation
 from matplotlib.animation import FuncAnimation
 
 from coverage_controll import CoverageController
@@ -18,14 +19,15 @@ ax.set_aspect('equal', adjustable='box')
 coverage_controller = CoverageController(n)
 
 
+
 def update(frame_number):
-    ax.add_patch(coverage_controller.get_circles().__next__())
     if coverage_controller.are_walls_connected():
-        animation.pause()
+        anim.event_source.stop()
     else:
-        ax.set_title('number of circles {}'.format(frame_number))
-    return
+        ax.set_title('number of circles = {}'.format(coverage_controller.number_of_circles))
+    yield ax.add_patch(coverage_controller.get_circles().__next__())
 
 
-animation = FuncAnimation(fig, update, interval=1, save_count=100)
+anim = FuncAnimation(fig, update, interval=1, save_count=100, blit=True)
+
 plt.show()

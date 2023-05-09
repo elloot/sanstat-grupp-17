@@ -77,6 +77,7 @@ class CoverageController:
             self.circle_unions.union_sets(0, circle.index)
         if circle.coordinates[0] >= np.sqrt(self.n) - 1:
             self.circle_unions.union_sets(1, circle.index)
+        self.number_of_circles += 1
         return circle
 
     def get_circles(self):
