@@ -83,3 +83,8 @@ class CoverageController:
     def get_circles(self):
         while True:
             yield plt.Circle(self.new_circle().coordinates, 1, edgecolor='black', facecolor='none')
+
+    def run_simulation(self):
+        while not self.are_walls_connected():
+            self.new_circle()
+        return self.number_of_circles

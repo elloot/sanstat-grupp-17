@@ -13,7 +13,9 @@ class UnionFind:
         if self.parent[i] == i:
             return i
         else:
-            return self.find_set(self.parent[i])
+            set = self.find_set(self.parent[i])
+            self.parent[i] = set
+            return set
 
     def is_same_set(self, i, j):
         return self.find_set(i) == self.find_set(j)
