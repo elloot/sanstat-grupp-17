@@ -9,6 +9,7 @@ from union_find import UnionFind
 b = 2 * math.pi ** (1/2) / 3 ** (1/4)
 s = b * 3 ** (1/2) / 2 * (1 + math.sin(math.pi / 6))  # length from centre to vertex
 h = s * (1 + math.sin(math.pi / 6))
+side = s * math.cos(math.pi / 6)
 class Triangle:
   def __init__(self, coordinates, index):
     self.coordinates = coordinates
@@ -28,21 +29,28 @@ def get_row_col(coordinates):
   return int(np.ceil(x / 2)) - 1, int(np.ceil(x / 2)) - 1
 
 
-def intersects(triangle1, triangle2):
-  x1, y1 = triangle1.coordinates1
-  x2, y2 = triangle2.coordinates2
-  if np.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2) > 2 * s:
+def intersects(t1, t2):
+    x1, y1 = t1.coordinates
+    x2, y2 = t2.coordinates
+    if ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** (1/2) > 2 * l:
+        return False
+    
+    for pair in ((t1, t2), (t2, t1)):  # asymmetric
+        a, b = pair
+        bottom_left = b.vertices[0]
+        bottom_right = b.vertices[1]
+        top = b.vertices[2]
+
+        for v in a.vertices:
+            if not bottom_left[1] <= v[1] <= top[1]:
+                continue
+
+            ratio = 1 - (v[1] - bottom_left[1]) / (top[1] - bottom_left[1])
+            if not -ratio * side + top[0] <= v[0] <= ratio * side + top[0]:
+                continue
+
+            return True
     return False
-
-  vs2 = triangle2.vertices
-  for v in triangle1.vertices:
-    if not vs2[0][1] <= v[1] <= vs2[2][1]:  # if vertex is between top and bottom vertex on other
-      return False
-
-    ratio = 1 - (v[1] - vs2[0][1]) / h
-    if not -ratio * s * math.cos(math.pi / 6) + vs2[2][0] <= v[0] <= ratio * s * math.cos(math.pi / 6) + vs2[2][0]:  # if vertex is in the width at given height
-      return False
-  return True
 
 class SquareArea:
   def __init__(self, side_length):
