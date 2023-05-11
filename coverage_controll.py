@@ -3,6 +3,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
+import voronoi
 from union_find import UnionFind
 
 
@@ -16,7 +17,7 @@ def get_row_col(coordinates):
     (x, y) = coordinates
     if x == 0: x += 1
     if y == 0: y += 1
-    return int(np.ceil(x / 2)) - 1, int(np.ceil(x / 2)) - 1
+    return int(np.ceil(x / 2)) - 1, int(np.ceil(y / 2)) - 1
 
 
 def calculate_distance(coordinates1, coordinates2):
@@ -33,10 +34,37 @@ class SquareArea:
         self.cols = cols
         self.sub_area = [[[] for j in range(cols)] for i in range(rows)]
         self.is_sub_area_covered = [[False for j in range(cols)] for i in range(rows)]
+        self.number_of_sub_areas = rows * cols
+        self.number_of_covered_sub_areas = 0
+
+    def is_square_covered(self):
+        return self.number_of_covered_sub_areas == self.number_of_sub_areas
+
+    def test_sub_area_covered(self, row, col):
+        if self.is_sub_area_covered[row][col]:
+            return
+        origin = (row * 2, col * 2)
+        sub_area_center = (origin[0] + 1, origin[1] + 1)
+        adjacent_circles_coordinates = [circle.coordinates for circle in self.get_adjacent_circles(sub_area_center)]
+        circles = list(filter(lambda circle_center: calculate_distance(circle_center, sub_area_center) <= 2,
+                              adjacent_circles_coordinates))
+        if voronoi.is_covered(circles, origin=origin):
+            self.is_sub_area_covered[row][col] = True
+            self.number_of_covered_sub_areas += 1
+
+    def check_new_circle(self, circle):
+        (row, col) = get_row_col(circle.coordinates)
+        row_d = [0, -1, -1, 0, 1, 1, 1, 0, -1]
+        col_d = [0, 0, 1, 1, 1, 0, -1, -1, -1]
+        for i in range(0, 9):
+            if 0 <= row + row_d[i] < self.rows and 0 <= col + col_d[i] < self.cols:
+                self.test_sub_area_covered(row + row_d[i], col + col_d[i])
+        print("{} of {} subareas covered".format(self.number_of_covered_sub_areas, self.number_of_sub_areas))
 
     def add_circle(self, circle):
         (row, col) = get_row_col(circle.coordinates)
         self.sub_area[row][col].append(circle)
+        self.check_new_circle(circle)
 
     def get_intersecting_circles(self, circle):
         return list(filter(lambda circle2: calculate_distance(circle.coordinates, circle2.coordinates) <= 2,
@@ -63,6 +91,9 @@ class CoverageController:
 
     def are_walls_connected(self):
         return self.circle_unions.is_same_set(0, 1)
+
+    def is_completely_covered(self):
+        return self.area.is_square_covered()
 
     def get_random_coordinates(self):
         return np.random.uniform(0, np.sqrt(self.n)), np.random.uniform(0, np.sqrt(self.n))

@@ -16,7 +16,7 @@ def show_coverage(n):
     coverage_controller = CoverageController(n)
 
     def update(frame_number):
-        if coverage_controller.are_walls_connected():
+        if coverage_controller.is_completely_covered():
             anim.event_source.stop()
         else:
             ax.set_title('number of circles = {}'.format(coverage_controller.number_of_circles))

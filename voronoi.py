@@ -30,9 +30,15 @@ def is_covered(circles, origin=(0, 0), width=2, height=2):
                     return [x_cutoff, y_intersect]
         return [-1, -1]
 
+    if len(circles) < 2:
+        return False
     circles = [(circle[0] - origin[0], circle[1] - origin[1]) for circle in circles]
-    vor = Voronoi(circles)
+    points = circles.copy()
+    points.extend([[10+width, 10+height], [-10-width, 10+height], [10+width, -10-height], [-10-width, -10-height]])
+    vor = Voronoi(points)
     extremes = list(filter(lambda c: 0 <= c[0] <= width and 0 <= c[1] <= height, vor.vertices))
+    if len(extremes) < 1:
+        return False
     new_extremes = [[0, 0], [0, height], [width, 0], [width, height]]
     for (i1, i2) in filter(lambda p: p[0] != -1, vor.ridge_vertices):
         p1 = vor.vertices[i1]

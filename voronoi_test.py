@@ -8,7 +8,7 @@ from voronoi import is_covered
 # np.random.seed(123)
 
 
-circles = np.array([(np.random.uniform(-1, 3), np.random.uniform(-1, 3)) for i in range(0, 15)])
+circles = np.array([(np.random.uniform(-1, 3), np.random.uniform(-1, 3)) for i in range(0, 25)])
 
 plt.xlim([-1, 3]), plt.ylim([-1, 3])
 rect = patches.Rectangle((0, 0), 2, 2, linewidth=2, edgecolor='black', facecolor='none')
