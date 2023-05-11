@@ -32,6 +32,7 @@ class SquareArea:
         self.rows = rows
         self.cols = cols
         self.sub_area = [[[] for j in range(cols)] for i in range(rows)]
+        self.is_sub_area_covered = [[False for j in range(cols)] for i in range(rows)]
 
     def add_circle(self, circle):
         (row, col) = get_row_col(circle.coordinates)

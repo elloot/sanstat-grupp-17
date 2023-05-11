@@ -15,6 +15,7 @@ class UnionFind:
         else:
             set = self.find_set(self.parent[i])
             self.parent[i] = set
+            self.rank[i] = 0
             return set
 
     def is_same_set(self, i, j):
