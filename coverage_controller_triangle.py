@@ -40,7 +40,7 @@ def intersects(triangle1, triangle2):
       return False
 
     ratio = 1 - (v[1] - vs2[0][1]) / h
-    if not ratio * vs2[0][0] <= v[0] <= ratio * vs2[1][0]:  # if vertex is in the width at given height
+    if not -ratio * s * math.cos(math.pi / 6) + vs2[2][0] <= v[0] <= ratio * s * math.cos(math.pi / 6) + vs2[2][0]:  # if vertex is in the width at given height
       return False
   return True
 
