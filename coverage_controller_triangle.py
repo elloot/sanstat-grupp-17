@@ -32,7 +32,7 @@ def get_row_col(coordinates):
 def intersects(t1, t2):
     x1, y1 = t1.coordinates
     x2, y2 = t2.coordinates
-    if ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** (1/2) > 2 * l:
+    if ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** (1/2) > 2 * s:
         return False
     
     for pair in ((t1, t2), (t2, t1)):  # asymmetric
@@ -111,9 +111,9 @@ class CoverageControllerTriangle:
     self.number_of_triangles += 1
     return triangle
 
-  def get_triangles(self):
-    while True:
-      yield plt.triangle(self.new_triangle().coordinates, 1, edgecolor='black', facecolor='none')
+#   def get_triangles(self):
+#     while True:
+#       yield plt.triangle(self.new_triangle().coordinates, 1, edgecolor='black', facecolor='none')
 
   def run_simulation(self):
     while not self.are_walls_connected():
