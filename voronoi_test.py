@@ -6,17 +6,18 @@ import matplotlib.pyplot as plt
 from voronoi import is_covered
 
 # np.random.seed(123)
+width = 4
+height = 4
 
+circles = np.array([(np.random.uniform(-1, width+1), np.random.uniform(-1, height+1)) for i in range(0, 60)])
 
-circles = np.array([(np.random.uniform(-1, 3), np.random.uniform(-1, 3)) for i in range(0, 25)])
-
-plt.xlim([-1, 3]), plt.ylim([-1, 3])
-rect = patches.Rectangle((0, 0), 2, 2, linewidth=2, edgecolor='black', facecolor='none')
+plt.xlim([-1, width+1]), plt.ylim([-1, height+1])
+rect = patches.Rectangle((0, 0), width, height, linewidth=2, edgecolor='black', facecolor='none')
 for circle in circles:
     plt.gca().add_patch(plt.Circle(circle, 1, edgecolor='none', facecolor='blue'))
 plt.gca().add_patch(rect)
 
-plt.title(is_covered(circles))
+plt.title(is_covered(circles, width=width, height=height))
 plt.gca().set_aspect('equal')
 plt.show()
 

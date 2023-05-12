@@ -59,7 +59,7 @@ class SquareArea:
         for i in range(0, 9):
             if 0 <= row + row_d[i] < self.rows and 0 <= col + col_d[i] < self.cols:
                 self.test_sub_area_covered(row + row_d[i], col + col_d[i])
-        print("{} of {} subareas covered".format(self.number_of_covered_sub_areas, self.number_of_sub_areas))
+        #print("{} of {} subareas covered".format(self.number_of_covered_sub_areas, self.number_of_sub_areas))
 
     def add_circle(self, circle):
         (row, col) = get_row_col(circle.coordinates)
@@ -119,4 +119,7 @@ class CoverageController:
     def run_simulation(self):
         while not self.are_walls_connected():
             self.new_circle()
-        return self.number_of_circles
+        number_of_circles_for_connection = self.number_of_circles
+        while not self.is_completely_covered():
+            self.new_circle()
+        return number_of_circles_for_connection, self.number_of_circles

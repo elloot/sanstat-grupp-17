@@ -27,15 +27,22 @@ def show_coverage(n):
 
 
 def test_frequencies(n, simulations):
-    results = []
+    results1 = []
+    results2 = []
     for i in range(0, simulations):
         coverage_controller = CoverageController(n)
-        results.append(coverage_controller.run_simulation())
+        result = coverage_controller.run_simulation()
+        results1.append(result[0])
+        results2.append(result[1])
+        print("{} simulations completed".format(i+1))
 
-    fig = plt.figure(figsize=(7, 5))
-    ax = fig.add_axes([0.1, 0.1, 0.8, 0.8], frameon=True)
-    ax.set_title("n = {}, {} simulations".format(n, simulations))
-    ax.set_xlabel("#circles required for connecting the walls")
-    ax.set_ylabel("frequencies")
-    ax.hist(results)
+    fig, ax = plt.subplots(1, 2)
+    fig.suptitle("n = {}, {} simulations".format(n, simulations))
+    ax[0].set_xlabel("#circles required for connecting the walls")
+    ax[0].set_ylabel("frequencies")
+    ax[0].hist(results1)
+
+    ax[1].set_xlabel("#circles required for complete coverage")
+    ax[1].set_ylabel("frequencies")
+    ax[1].hist(results2)
     plt.show()
