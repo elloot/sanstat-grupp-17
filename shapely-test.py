@@ -9,6 +9,10 @@ circle_res = 100
 square = shapely.Polygon(
     ((0, 0), (0, np.sqrt(n)), (np.sqrt(n), np.sqrt(n)), (np.sqrt(n), 0)))
 
+# triangle creation
+x, y = np.random.uniform(0, np.sqrt(n), size=2)
+triangle = shapely.Polygon(
+    [(x - 0.5, y - 0.5), (x - 0.5, y + 0.5), (x - 0.5 + np.sqrt(1.25), y)])
 
 results = []
 
@@ -25,9 +29,13 @@ for i in range(num_sim):
         union = shapely.union_all(shapes)
         if type(union) == shapely.geometry.polygon.Polygon:
             blob = union
+            # doesn't work correctly since two circles could overlap and create
+            # a blob, but there could be another circle farther away that then gets
+            # overwritten by the next line
             shapes = [blob]
         if shapely.area(shapely.intersection(blob, square)) == shapely.area(square):
             filled = True
     results.append(num_circles)
+
 
 print(sum(results) / len(results))
