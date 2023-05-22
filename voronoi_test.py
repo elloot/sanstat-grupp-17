@@ -6,10 +6,10 @@ import matplotlib.pyplot as plt
 from voronoi import is_covered
 
 # np.random.seed(123)
-width = 4
-height = 4
+width = 2
+height = 2
 
-circles = np.array([(np.random.uniform(-1, width+1), np.random.uniform(-1, height+1)) for i in range(0, 60)])
+circles = np.array([(np.random.uniform(-1, width+1), np.random.uniform(-1, height+1)) for i in range(0, 20)])
 
 plt.xlim([-1, width+1]), plt.ylim([-1, height+1])
 rect = patches.Rectangle((0, 0), width, height, linewidth=2, edgecolor='black', facecolor='none')
