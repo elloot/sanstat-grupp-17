@@ -3,11 +3,16 @@ class UnionFind:
         self.N = number_of_elements
         self.parent = [i for i in range(0, self.N)]
         self.rank = [0 for i in range(0, self.N)]
+        self.number_of_sets = number_of_elements
+
+    def get_number_of_sets(self):
+        return self.number_of_sets
 
     def add(self):
         self.parent.append(self.N)
         self.rank.append(0)
         self.N += 1
+        self.number_of_sets += 1
 
     def find_set(self, i):
         if self.parent[i] == i:
@@ -31,5 +36,4 @@ class UnionFind:
         self.parent[x] = y
         if self.rank[x] == self.rank[y]:
             self.rank[y] += 1
-
-
+        self.number_of_sets -= 1

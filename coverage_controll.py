@@ -129,3 +129,19 @@ class CoverageController:
         while not self.is_completely_covered():
             self.new_circle()
         return number_of_circles_for_connection, self.number_of_circles
+
+"""
+    def check_corners(self, new_triangle):
+        x, y = new_triangle.coordinates
+        # Top left corner
+        if x <= SIDE / 2 and y >= np.sqrt(self.n) - 2 / 3 * HEIGHT:
+            self.uf.union_sets(2, new_triangle.index)
+        # Top right corner
+        if x >= np.sqrt(self.n) - SIDE / 2 and y >= np.sqrt(self.n) - 2 / 3 * HEIGHT:
+            self.uf.union_sets(3, new_triangle.index)
+        # Bottom right corner
+        if x >= np.sqrt(self.n) - SIDE / 2 and y <= 1 / 3 * HEIGHT:
+            self.uf.union_sets(4, new_triangle.index)
+        # Bottom left corner
+        if x <= SIDE / 2 and y <= 1 / 3 * HEIGHT:
+            self.uf.union_sets(5, new_triangle.index)"""
