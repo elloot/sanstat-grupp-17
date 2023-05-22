@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
 from coverage_controll import CoverageController
-from coverage_controller_triangle import CoverageControllerTriangle
 
 
 def show_coverage(n):
@@ -46,30 +45,4 @@ def test_frequencies(n, simulations):
     ax[1].set_xlabel("#circles required for complete coverage")
     ax[1].set_ylabel("frequencies")
     ax[1].hist(results2)
-
-    print("Average for connection = {}".format(sum(results1) / len(results1)))
-    print("Average for coverage = {}".format(sum(results2) / len(results2)))
-
     plt.show()
-
-
-
-
-def test_frequencies_triangles(n, simulations):
-    results1 = []
-    for i in range(0, simulations):
-        coverage_controller_triangle = CoverageControllerTriangle(n)
-        result = coverage_controller_triangle.run_simulation()
-        results1.append(result)
-        print("{} simulations completed".format(i+1))
-
-    fig, ax = plt.subplots(1, 2)
-    fig.suptitle("n = {}, {} simulations".format(n, simulations))
-    ax[0].set_xlabel("#circles required for connecting the walls")
-    ax[0].set_ylabel("frequencies")
-    ax[0].hist(results1)
-
-    ax[1].set_xlabel("#circles required for complete coverage")
-    ax[1].set_ylabel("frequencies")
-    plt.show()
-
