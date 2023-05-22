@@ -1,16 +1,19 @@
-import math
-
 import numpy as np
-import matplotlib.pyplot as plt
+import shapely
 
-import voronoi
 from union_find import UnionFind
 
+SIDE = np.sqrt(2 * np.pi / np.sqrt(1.25))
+HEIGHT = np.sqrt((SIDE / 2) ** 2 + SIDE ** 2)
 
-class Circle:
+
+class Triangle:
     def __init__(self, coordinates, index):
         self.coordinates = coordinates
         self.index = index
+        x, y = coordinates
+        self.polygon = shapely.Polygon(
+            [(x - 0.5 * SIDE, y - 1/3 * HEIGHT), (x + 0.5 * SIDE, y - 1/3 * HEIGHT), (x, y + 2/3 * HEIGHT)])
 
 
 def get_row_col(coordinates):
@@ -19,13 +22,7 @@ def get_row_col(coordinates):
         x += 1
     if y == 0:
         y += 1
-    return int(np.ceil(x / 2)) - 1, int(np.ceil(y / 2)) - 1
-
-
-def calculate_distance(coordinates1, coordinates2):
-    x1, y1 = coordinates1
-    x2, y2 = coordinates2
-    return np.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
+    return int(np.ceil(x / SIDE)) - 1, int(np.ceil(y / SIDE)) - 1
 
 
 class SquareArea:
